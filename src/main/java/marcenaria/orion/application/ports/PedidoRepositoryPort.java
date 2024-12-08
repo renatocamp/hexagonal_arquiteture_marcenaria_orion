@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import marcenaria.orion.domain.Pedido;
 
-public interface PedidoServicePort {
+public interface PedidoRepositoryPort {
 	
-    Pedido criarPedido(Pedido pedido);
+    Pedido salvar(Pedido pedido);
     
     Optional<Pedido> buscarPorId(Long id);
     

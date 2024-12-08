@@ -1,50 +1,32 @@
 package marcenaria.orion.application.usecases;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
+import marcenaria.orion.application.ports.PedidoRepositoryPort;
 import marcenaria.orion.application.ports.PedidoServicePort;
 import marcenaria.orion.domain.Pedido;
-import marcenaria.orion.infrastructure.adapters.outputs.PedidoRepository;
 
-public class PedidoServiceImpl implements PedidoServicePort{
-	
-	
-	private PedidoRepository pedidoRepository;
-	
-	public PedidoServiceImpl() {
-		
-	}
-	
-	public PedidoServiceImpl(PedidoRepository pedidoRepository) {
-		this.pedidoRepository = pedidoRepository;
-	}
+public class PedidoServiceImpl implements PedidoServicePort {
 
-	@Override
-	public Pedido criarPedido(Pedido pedido) {
-		
-		pedido.setValorTotal(calcularValorTotal(pedido));
-		
-		return pedidoRepository.save(pedido);
-	}
-	
-	private BigDecimal calcularValorTotal(Pedido pedido) {
-		
-		return pedido.getItens().stream()
-				.map(item -> item.getPrecoUnitario().multiply(BigDecimal.valueOf(item.getQuantidade())))
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
-	}
+    private final PedidoRepositoryPort pedidoRepositoryPort;
 
-	@Override
-	public List<Pedido> listarPedidos() {
-		
-		return pedidoRepository.findAll();
-	}
+    public PedidoServiceImpl(PedidoRepositoryPort pedidoRepositoryPort) {
+        this.pedidoRepositoryPort = pedidoRepositoryPort;
+    }
 
-	@Override
-	public boolean existePedido(Long pedidoId) {
-		
-		return pedidoRepository.existsById(pedidoId);
-	}
+    @Override
+    public Pedido criarPedido(Pedido pedido) {
+        return pedidoRepositoryPort.salvar(pedido);
+    }
 
+    @Override
+    public Optional<Pedido> buscarPorId(Long id) {
+        return pedidoRepositoryPort.buscarPorId(id);
+    }
+
+    @Override
+    public List<Pedido> buscarTodos() {
+        return pedidoRepositoryPort.buscarTodos();
+    }
 }

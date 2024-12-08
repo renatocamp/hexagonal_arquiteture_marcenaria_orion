@@ -4,11 +4,21 @@ import java.math.BigDecimal;
 
 public class ItemPedido {
 	
+	private Long id;
+
 	private String descricao;
 	
     private int quantidade;
     
     private BigDecimal precoUnitario;
+    
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getDescricao() {
 		return descricao;

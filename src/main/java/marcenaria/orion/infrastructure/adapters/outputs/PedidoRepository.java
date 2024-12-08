@@ -1,11 +1,8 @@
 package marcenaria.orion.infrastructure.adapters.outputs;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import marcenaria.orion.domain.Pedido;
-
-public interface PedidoRepository extends JpaRepository<Pedido, Long>{
-	
-	
-
+@Repository
+public interface PedidoRepository extends JpaRepository<PedidoEntity, Long> {
 }
